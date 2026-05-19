@@ -1,0 +1,28 @@
+project:
+  name: "NeuralBlackScholes"
+  device: "cuda:0" # RTX 4050 target
+  seed: 42
+
+data:
+  tickers:
+    - "SPY"
+    - "QQQ"
+    - "IWM" # Russell 2000
+  risk_free_rate: 0.05
+  history_period: "1y" # Data fetching period
+
+model:
+  hidden_size: 64
+  latent_dim: 3
+  layers: 3
+  activation: "tanh" # Often better for SDEs than ReLU
+
+training:
+  epochs: 300
+  batch_size: 128
+  learning_rate: 0.005
+  save_dir: "checkpoints"
+
+quantlib:
+  day_count: "Actual/365"
+  calendar: "UnitedStates"

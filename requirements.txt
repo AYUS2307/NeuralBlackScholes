@@ -1,0 +1,9 @@
+torch>=2.0.0
+torchsde>=0.2.5
+QuantLib>=1.30
+yfinance
+pandas
+numpy
+pyyaml
+tqdm
+matplotlib
