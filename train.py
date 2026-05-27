@@ -101,19 +101,11 @@ def train(run_name='default'):
             
             mc_prices = (payoffs * discount).mean(dim=1).unsqueeze(1) # (B, 1)
             
-            # Residual Learning:
-            # We want Model ~ Market.
-            # If we were doing residual correction strictly: Price = BS + Correction.
-            # Here we are doing Price = NeuralSDE.
-            # To enforce "Residual Learning" feel:
-            # We can initialize SDE to BS dynamics?
-            # Or define Loss = MSE(Neural, Market). 
-            # BS Price is just a reference metric here?
-            # User said: "physics... baseline... neural... learn diffusion".
-            # IF Neural learns diffusion, it BECOMES the pricing model.
-            # So Price = NeuralSDE Price.
-            
             predicted_price = mc_prices 
+            
+            # Physics-Informed Loss Function:
+            # 1. loss_mse: Measures the distance between the SDE model's predictions and real-market traded prices.
+            # 2. loss_arb: Arbitrage penalty to prevent negative option prices, ensuring physical and economic consistency.
             
             # Loss
             loss_mse = criterion(predicted_price, y_market)
